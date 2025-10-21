@@ -20,7 +20,7 @@ const HackerNavbar = () => {
   }, []);
 
   const navLinks = [
-    { id: 'home', label: 'HOME', command: 'cd ~' },
+    { id: 'home', label: 'HOME', command: 'cd ~'  },
     { id: 'about', label: 'ABOUT', command: 'cat about.txt' },
     { id: 'projects', label: 'PROJECTS', command: 'ls projects/' },
     { id: 'skills', label: 'SKILLS', command: 'grep skills' },
@@ -60,7 +60,14 @@ const HackerNavbar = () => {
               {navLinks.map((link, index) => (
                 <button
                   key={link.id}
-                  onClick={() => setActiveLink(link.id)}
+                 onClick={() => {
+  setActiveLink(link.id);
+  const section = document.getElementById(link.id);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth" });
+  }
+}}
+
                   className="group relative px-4 py-2 font-mono text-sm transition-all duration-300"
                 >
                   <div className="relative z-10 flex flex-col items-center">

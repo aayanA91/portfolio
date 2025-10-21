@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import HackerNavbar from '../components/navbar';
+import AboutPage from './aboutme';
 
 const HackerHero = () => {
   const [text, setText] = useState('');
@@ -59,7 +60,7 @@ const HackerHero = () => {
   return (
     <>
     <HackerNavbar/>
-    <div className="relative w-full min-h-screen bg-black overflow-hidden">
+    <div className="relative w-full min-h-screen bg-black overflow-hidden" id='home'>
       {/* Animated Matrix Background */}
       <div className="absolute inset-0 opacity-10">
         {matrix.map((y, i) => (
@@ -321,6 +322,7 @@ const HackerHero = () => {
         }
       `}</style>
     </div>
+<AboutPage/>
     </>
   );
 };
