@@ -182,6 +182,10 @@ const HackerNavbar = () => {
               <button
                 key={link.id}
                 onClick={() => {
+                  const section = document.getElementById(link.id);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth" });
+  }
                   setActiveLink(link.id);
                   setIsMobileMenuOpen(false);
                 }}

@@ -318,7 +318,7 @@ import { Terminal, Code, Cpu, Zap, Database, Server, Lock, Boxes } from 'lucide-
         </section>
 
         {/* Footer */}
-        <section className="py-12 px-4 border-t border-green-400/30">
+        <section className="py-12 px-4 border-t border-green-400/30 ">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-green-500">
