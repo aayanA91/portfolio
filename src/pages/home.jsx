@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import HackerNavbar from '../components/navbar';
 import AboutPage from './aboutme';
+import Skills from './skills';
 
 const HackerHero = () => {
   const [text, setText] = useState('');
@@ -323,6 +324,7 @@ const HackerHero = () => {
       `}</style>
     </div>
 <AboutPage/>
+<Skills/>
     </>
   );
 };
