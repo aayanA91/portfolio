@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Loader from './components/loader'
 import HackerHero from "./pages/home"
-import { Helmet } from "react-helmet";
+import helmet from 'helmet';
 
 function App() {
  const [loaded, setLoaded] = useState(false);
