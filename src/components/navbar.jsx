@@ -5,27 +5,67 @@ const HackerNavbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('home');
   const [time, setTime] = useState(new Date());
+  const [commandPreview, setCommandPreview] = useState('');
 
+  // Handle scroll effect for navbar background
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+      
+      // Dynamic active link detection based on scroll position
+      const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+      const scrollPosition = window.scrollY + 100; // Offset for better detection
+
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const { offsetTop, offsetHeight } = section;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveLink(sectionId);
+            break;
+          }
+        }
+      }
     };
+
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call once on mount
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Update time every second
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
+  // Close mobile menu on resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const navLinks = [
     { id: 'home', label: 'HOME', command: 'cd ~'  },
     { id: 'about', label: 'ABOUT', command: 'cat about.txt' },
-    { id: 'projects', label: 'PROJECTS', command: 'ls projects/' },
     { id: 'skills', label: 'SKILLS', command: 'grep skills' },
+    { id: 'projects', label: 'PROJECTS', command: 'ls projects/' },
     { id: 'contact', label: 'CONTACT', command: 'mail -s' }
   ];
+
+  const handleNavClick = (linkId) => {
+    const section = document.getElementById(linkId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveLink(linkId);
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
     <>
@@ -38,7 +78,10 @@ const HackerNavbar = () => {
           <div className="flex items-center justify-between h-16 md:h-20">
             
             {/* Logo / Brand */}
-            <div className="flex items-center space-x-3 group cursor-pointer">
+            <div 
+              className="flex items-center space-x-3 group cursor-pointer"
+              onClick={() => handleNavClick('home')}
+            >
               <div className="relative">
                 <div className="w-10 h-10 border-2 border-green-500 bg-black flex items-center justify-center font-mono text-green-400 font-bold text-lg shadow-[0_0_10px_rgba(0,255,0,0.5)] group-hover:shadow-[0_0_20px_rgba(0,255,0,0.8)] transition-all duration-300">
                   AA
@@ -60,14 +103,9 @@ const HackerNavbar = () => {
               {navLinks.map((link, index) => (
                 <button
                   key={link.id}
-                 onClick={() => {
-  setActiveLink(link.id);
-  const section = document.getElementById(link.id);
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth" });
-  }
-}}
-
+                  onClick={() => handleNavClick(link.id)}
+                  onMouseEnter={() => setCommandPreview(link.command)}
+                  onMouseLeave={() => setCommandPreview('')}
                   className="group relative px-4 py-2 font-mono text-sm transition-all duration-300"
                 >
                   <div className="relative z-10 flex flex-col items-center">
@@ -99,7 +137,7 @@ const HackerNavbar = () => {
               {/* Social Links */}
               <div className="flex items-center gap-2">
                 <a 
-                  href="https://github.com/yourusername" 
+                  href="https://github.com/aayanA91" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group relative w-8 h-8 border border-green-500 bg-black flex items-center justify-center transition-all duration-300 hover:border-green-400 hover:shadow-[0_0_15px_rgba(0,255,0,0.5)]"
@@ -111,7 +149,7 @@ const HackerNavbar = () => {
                 </a>
 
                 <a 
-                  href="https://linkedin.com/in/yourusername" 
+                  href="https://www.linkedin.com/in/aayan-aness-b1a14231b/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group relative w-8 h-8 border border-green-500 bg-black flex items-center justify-center transition-all duration-300 hover:border-green-400 hover:shadow-[0_0_15px_rgba(0,255,0,0.5)]"
@@ -123,7 +161,9 @@ const HackerNavbar = () => {
                 </a>
 
                 <a 
-                  href="mailto:your.email@example.com"
+                  href="https://mail.google.com/mail/?view=cm&to=aayan.practical@gmail.com"
+                  target='_blank'
+                  rel="noopener noreferrer"
                   className="group relative w-8 h-8 border border-green-500 bg-black flex items-center justify-center transition-all duration-300 hover:border-green-400 hover:shadow-[0_0_15px_rgba(0,255,0,0.5)]"
                   aria-label="Email"
                 >
@@ -151,7 +191,10 @@ const HackerNavbar = () => {
               </div>
 
               {/* CTA Button */}
-              <button className="group relative px-4 py-2 font-mono text-xs text-green-400 border border-green-500 bg-black overflow-hidden transition-all duration-300 hover:text-black shadow-[0_0_10px_rgba(0,255,0,0.3)] hover:shadow-[0_0_20px_rgba(0,255,0,0.6)]">
+              <button 
+                onClick={() => handleNavClick('contact')}
+                className="group relative px-4 py-2 font-mono text-xs text-green-400 border border-green-500 bg-black overflow-hidden transition-all duration-300 hover:text-black shadow-[0_0_10px_rgba(0,255,0,0.3)] hover:shadow-[0_0_20px_rgba(0,255,0,0.6)]"
+              >
                 <span className="relative z-10">&gt; HIRE_ME</span>
                 <div className="absolute inset-0 bg-green-500 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               </button>
@@ -161,6 +204,7 @@ const HackerNavbar = () => {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 text-green-400 border border-green-500 bg-black hover:bg-green-500 hover:text-black transition-colors duration-200"
+              aria-label="Toggle menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {isMobileMenuOpen ? (
@@ -181,14 +225,7 @@ const HackerNavbar = () => {
             {navLinks.map((link) => (
               <button
                 key={link.id}
-                onClick={() => {
-                  const section = document.getElementById(link.id);
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth" });
-  }
-                  setActiveLink(link.id);
-                  setIsMobileMenuOpen(false);
-                }}
+                onClick={() => handleNavClick(link.id)}
                 className={`w-full text-left px-4 py-3 font-mono text-sm border transition-all duration-200 ${
                   activeLink === link.id
                     ? 'border-green-400 bg-green-500 bg-opacity-10 text-green-400 shadow-[0_0_15px_rgba(0,255,0,0.3)]'
@@ -206,26 +243,17 @@ const HackerNavbar = () => {
             <div className="mt-4 pt-4 border-t border-green-500 space-y-2">
               {/* Social Links Mobile */}
               <div className="flex justify-center gap-3 mb-3">
-              <a
-  href="https://github.com/aayanA91"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-10 h-10 border border-green-500 bg-black flex items-center justify-center hover:border-green-400 hover:bg-green-500 hover:bg-opacity-10 transition-all duration-300"
-  aria-label="GitHub"
->
-  <svg
-    className="w-5 h-5 text-green-400"
-    fill="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      fillRule="evenodd"
-      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-      clipRule="evenodd"
-    />
-  </svg>
-</a>
-
+                <a
+                  href="https://github.com/aayanA91"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 border border-green-500 bg-black flex items-center justify-center hover:border-green-400 hover:bg-green-500 hover:bg-opacity-10 transition-all duration-300"
+                  aria-label="GitHub"
+                >
+                  <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  </svg>
+                </a>
 
                 <a 
                   href="https://www.linkedin.com/in/aayan-aness-b1a14231b/" 
@@ -241,6 +269,8 @@ const HackerNavbar = () => {
 
                 <a 
                   href="https://mail.google.com/mail/?view=cm&to=aayan.practical@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 border border-green-500 bg-black flex items-center justify-center hover:border-green-400 hover:bg-green-500 hover:bg-opacity-10 transition-all duration-300"
                   aria-label="Email"
                 >
@@ -248,7 +278,6 @@ const HackerNavbar = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </a>
-                
               </div>
 
               <div className="flex justify-between items-center text-green-400 font-mono text-xs">
@@ -262,7 +291,10 @@ const HackerNavbar = () => {
                 <span>TIME:</span>
                 <span>{time.toLocaleTimeString('en-US', { hour12: false })}</span>
               </div>
-              <button className="w-full mt-3 px-4 py-3 font-mono text-sm text-green-400 border border-green-500 bg-black hover:bg-green-500 hover:text-black transition-all duration-300">
+              <button 
+                onClick={() => handleNavClick('contact')}
+                className="w-full mt-3 px-4 py-3 font-mono text-sm text-green-400 border border-green-500 bg-black hover:bg-green-500 hover:text-black transition-all duration-300"
+              >
                 &gt; HIRE_ME
               </button>
             </div>
@@ -270,12 +302,24 @@ const HackerNavbar = () => {
         </div>
       </nav>
 
-      {/* Terminal Command Preview (appears on hover) */}
-      <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 pointer-events-none">
-        <div className="bg-black border border-green-500 px-4 py-2 font-mono text-green-400 text-xs opacity-0 hover:opacity-100 transition-opacity shadow-[0_0_20px_rgba(0,255,0,0.3)]">
-          <span className="text-green-500">&gt;</span> Navigation Active
+      {/* Terminal Command Preview (appears on hover in desktop) */}
+      {commandPreview && (
+        <div className="hidden md:block fixed top-24 left-1/2 transform -translate-x-1/2 z-40 pointer-events-none">
+          <div className="bg-black border border-green-500 px-4 py-2 font-mono text-green-400 text-xs shadow-[0_0_20px_rgba(0,255,0,0.3)] animate-fadeIn">
+            <span className="text-green-500">&gt;</span> {commandPreview}
+          </div>
         </div>
-      </div>
+      )}
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease-out;
+        }
+      `}</style>
     </>
   );
 };

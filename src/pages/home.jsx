@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import HackerNavbar from '../components/navbar';
 import AboutPage from './aboutme';
 import Skills from './skills';
+import Projects from './projects';
+import ContactPage from './contactus';
+import HackerFooter from '../components/footer';
 
 const HackerHero = () => {
   const [text, setText] = useState('');
@@ -151,11 +154,25 @@ const HackerHero = () => {
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-4">
-                <button className="group relative px-6 py-3 font-mono text-green-400 border-2 border-green-500 bg-black overflow-hidden transition-all duration-300 hover:text-black">
+               <button 
+               onClick={() => {
+    const element = document.getElementById("projects");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }}
+               className="group relative px-6 py-3 font-mono text-green-400 border-2 border-green-500 bg-black overflow-hidden transition-all duration-300 hover:text-black">
                   <span className="relative z-10">&gt; EXECUTE: VIEW_PROJECTS</span>
                   <div className="absolute inset-0 bg-green-500 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
                 </button>
-                <button className="group relative px-6 py-3 font-mono text-green-400 border-2 border-green-500 bg-black overflow-hidden transition-all duration-300 hover:text-black">
+                
+                <button 
+                onClick={() => {
+    const element = document.getElementById("contact");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    } }}
+                className="group relative px-6 py-3 font-mono text-green-400 border-2 border-green-500 bg-black overflow-hidden transition-all duration-300 hover:text-black">
                   <span className="relative z-10">&gt; INIT: CONTACT</span>
                   <div className="absolute inset-0 bg-green-500 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
                 </button>
@@ -325,6 +342,9 @@ const HackerHero = () => {
     </div>
 <AboutPage/>
 <Skills/>
+<Projects/>
+<ContactPage/>
+<HackerFooter/>
     </>
   );
 };
