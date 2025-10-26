@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-     <Helmet>
+     <helmet>
         <title>Aayan Anees | Portfolio</title>
         <meta name="description" content="Frontend & Full Stack Developer. Check my projects, skills, and achievements." />
         
@@ -33,7 +33,7 @@ function App() {
           }
           `}
         </script>
-      </Helmet>
+      </helmet>
 
       {!loaded ? (
         <Loader onComplete={() => setLoaded(true)} />
