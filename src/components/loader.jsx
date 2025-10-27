@@ -12,11 +12,11 @@ const HackerIntroLoader = ({ onLoadComplete }) => {
   const bootSequence = [
     { text: '> BYPASSING FIREWALL...', icon: Shield },
     { text: '> DECRYPTING PROTOCOLS...', icon: Lock },
-    { text: '> ESTABLISHING SECURE CONNECTION...', icon: Wifi },
+    { text: '> ESTABLISHING CONNECTION...', icon: Wifi },
     { text: '> INJECTING PAYLOAD...', icon: Code },
-    { text: '> COMPILING SOURCE CODE...', icon: Terminal },
-    { text: '> EXECUTING MAIN SEQUENCE...', icon: Zap },
-    { text: '> ACCESS GRANTED. WELCOME TO THE MATRIX.', icon: null }
+    { text: '> COMPILING SOURCE...', icon: Terminal },
+    { text: '> EXECUTING SEQUENCE...', icon: Zap },
+    { text: '> ACCESS GRANTED.', icon: null }
   ];
 
   // Glitch effect for name
@@ -98,19 +98,19 @@ const HackerIntroLoader = ({ onLoadComplete }) => {
         isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      {/* Matrix Rain Effect */}
+      {/* Matrix Rain Effect - Optimized for mobile */}
       <div className="absolute inset-0 opacity-20">
-        {Array.from({ length: 50 }).map((_, i) => (
+        {Array.from({ length: window.innerWidth < 768 ? 20 : 50 }).map((_, i) => (
           <div
             key={i}
             className="absolute text-green-400 font-mono text-xs animate-matrixRain"
             style={{
-              left: `${i * 2}%`,
+              left: `${i * (window.innerWidth < 768 ? 5 : 2)}%`,
               animationDelay: `${Math.random() * 2}s`,
               animationDuration: `${3 + Math.random() * 2}s`
             }}
           >
-            {Array.from({ length: 20 }).map((_, j) => (
+            {Array.from({ length: 15 }).map((_, j) => (
               <div key={j} className="opacity-70">
                 {String.fromCharCode(33 + Math.floor(Math.random() * 94))}
               </div>
@@ -134,99 +134,105 @@ const HackerIntroLoader = ({ onLoadComplete }) => {
       }} />
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-4xl w-full mx-4">
+      <div className="relative z-10 max-w-4xl w-full mx-4 px-2 sm:px-4">
         
-        {/* Glitch Title */}
-        <div className="text-center mb-12">
+        {/* Glitch Title - Responsive */}
+        <div className="text-center mb-6 sm:mb-12">
           <div className="relative inline-block">
-            <h1 className="text-6xl md:text-8xl font-bold text-green-400 font-mono tracking-wider glitch-text">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-green-400 font-mono tracking-wider glitch-text">
               {glitchText}
             </h1>
-            <div className="absolute inset-0 text-6xl md:text-8xl font-bold text-red-500 font-mono tracking-wider glitch-text opacity-70 animate-glitchLeft">
+            <div className="absolute inset-0 text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-red-500 font-mono tracking-wider glitch-text opacity-70 animate-glitchLeft">
               {glitchText}
             </div>
-            <div className="absolute inset-0 text-6xl md:text-8xl font-bold text-blue-500 font-mono tracking-wider glitch-text opacity-70 animate-glitchRight">
+            <div className="absolute inset-0 text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-blue-500 font-mono tracking-wider glitch-text opacity-70 animate-glitchRight">
               {glitchText}
             </div>
           </div>
-          <div className="mt-4 text-green-400 text-sm font-mono flex items-center justify-center gap-2">
+          <div className="mt-3 sm:mt-4 text-green-400 text-xs sm:text-sm font-mono flex items-center justify-center gap-2">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span>SYSTEM BREACH IN PROGRESS...</span>
+            <span className="hidden sm:inline">SYSTEM BREACH IN PROGRESS...</span>
+            <span className="sm:hidden">LOADING...</span>
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
           </div>
         </div>
 
-        {/* Hack Status Boxes */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        {/* Hack Status Boxes - Responsive Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-8">
           {['FIREWALL', 'DATABASE', 'SERVER', 'ACCESS'].map((item, i) => (
             <div
               key={i}
-              className={`border-2 p-4 transition-all duration-500 ${
+              className={`border-2 p-2 sm:p-4 transition-all duration-500 ${
                 hackProgress[i]
                   ? 'border-green-400 bg-green-400/10 shadow-[0_0_20px_rgba(34,197,94,0.5)]'
                   : 'border-green-400/30 bg-black'
               }`}
             >
-              <div className="text-center space-y-2">
-                <div className={`text-xs font-mono ${hackProgress[i] ? 'text-green-400' : 'text-gray-600'}`}>
+              <div className="text-center space-y-1 sm:space-y-2">
+                <div className={`text-[10px] sm:text-xs font-mono ${hackProgress[i] ? 'text-green-400' : 'text-gray-600'}`}>
                   {item}
                 </div>
-                <div className="text-2xl font-bold font-mono">
+                <div className="text-xl sm:text-2xl font-bold font-mono">
                   {hackProgress[i] ? (
                     <span className="text-green-400 animate-pulse">✓</span>
                   ) : (
                     <span className="text-gray-600">--</span>
                   )}
                 </div>
-                <div className={`text-xs font-mono ${hackProgress[i] ? 'text-green-400' : 'text-gray-600'}`}>
-                  {hackProgress[i] ? 'BREACHED' : 'LOCKED'}
+                <div className={`text-[9px] sm:text-xs font-mono ${hackProgress[i] ? 'text-green-400' : 'text-gray-600'}`}>
+                  {hackProgress[i] ? 'OK' : 'LOCK'}
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Terminal Window */}
+        {/* Terminal Window - Mobile Optimized */}
         <div className="border-2 border-green-400 bg-black shadow-[0_0_40px_rgba(34,197,94,0.4)]">
           {/* Terminal Header */}
-          <div className="border-b-2 border-green-400 p-3 flex items-center justify-between bg-green-400/5">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
-              <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
+          <div className="border-b-2 border-green-400 p-2 sm:p-3 flex items-center justify-between bg-green-400/5">
+            <div className="flex items-center gap-1 sm:gap-2">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500 animate-pulse" />
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
+              <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
             </div>
-            <span className="text-xs tracking-wider text-green-400 font-mono">HACK://ROOT@MATRIX/portfolio.exe</span>
-            <Terminal className="w-5 h-5 text-green-400 animate-pulse" />
+            <span className="text-[8px] sm:text-xs tracking-wider text-green-400 font-mono hidden sm:inline">
+              HACK://ROOT@MATRIX
+            </span>
+            <span className="text-[8px] text-green-400 font-mono sm:hidden">
+              ROOT
+            </span>
+            <Terminal className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 animate-pulse" />
           </div>
 
-          {/* Terminal Content */}
-          <div className="p-6 space-y-4 font-mono min-h-[300px]">
+          {/* Terminal Content - Scrollable on mobile */}
+          <div className="p-3 sm:p-6 space-y-3 sm:space-y-4 font-mono max-h-[40vh] sm:max-h-[50vh] overflow-y-auto">
             {/* Boot Sequence */}
-            <div className="space-y-2">
+            <div className="space-y-1 sm:space-y-2">
               {bootSequence.slice(0, currentLine + 1).map((line, i) => {
                 const Icon = line.icon;
                 return (
                   <div
                     key={i}
-                    className="text-green-400 text-sm flex items-center gap-3 animate-slideIn"
+                    className="text-green-400 text-[10px] sm:text-sm flex items-center gap-2 sm:gap-3 animate-slideIn"
                     style={{ animationDelay: `${i * 0.1}s` }}
                   >
-                    {Icon && <Icon className="w-4 h-4" />}
+                    {Icon && <Icon className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />}
                     <span className="text-green-500">█</span>
-                    {line.text}
+                    <span className="truncate">{line.text}</span>
                     {i === currentLine && (
-                      <span className="inline-block w-2 h-4 bg-green-400 animate-pulse ml-1" />
+                      <span className="inline-block w-1 h-3 sm:w-2 sm:h-4 bg-green-400 animate-pulse ml-1 flex-shrink-0" />
                     )}
                   </div>
                 );
               })}
             </div>
 
-            {/* Hexadecimal Data Stream */}
-            <div className="border-t border-green-400/30 pt-4 text-xs text-green-600 space-y-1 overflow-hidden max-h-20">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="animate-scroll" style={{ animationDelay: `${i * 0.5}s` }}>
-                  {Array.from({ length: 16 }).map(() => 
+            {/* Hexadecimal Data Stream - Hidden on small mobile */}
+            <div className="border-t border-green-400/30 pt-2 sm:pt-4 text-[8px] sm:text-xs text-green-600 space-y-1 overflow-hidden max-h-12 sm:max-h-20 hidden sm:block">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="animate-scroll overflow-hidden" style={{ animationDelay: `${i * 0.5}s` }}>
+                  {Array.from({ length: 12 }).map(() => 
                     Math.floor(Math.random() * 256).toString(16).padStart(2, '0')
                   ).join(' ')}
                 </div>
@@ -234,17 +240,18 @@ const HackerIntroLoader = ({ onLoadComplete }) => {
             </div>
 
             {/* Progress Section */}
-            <div className="border-t border-green-400/30 pt-4 space-y-3">
-              <div className="flex justify-between text-xs text-green-400">
-                <span className="flex items-center gap-2">
+            <div className="border-t border-green-400/30 pt-3 sm:pt-4 space-y-2 sm:space-y-3">
+              <div className="flex justify-between text-[10px] sm:text-xs text-green-400 items-center">
+                <span className="flex items-center gap-1 sm:gap-2">
                   <Zap className="w-3 h-3 animate-pulse" />
-                  INFILTRATION PROGRESS
+                  <span className="hidden sm:inline">INFILTRATION PROGRESS</span>
+                  <span className="sm:hidden">LOADING</span>
                 </span>
-                <span className="font-bold text-lg">{progress}%</span>
+                <span className="font-bold text-base sm:text-lg">{progress}%</span>
               </div>
 
               {/* Main Progress Bar */}
-              <div className="relative w-full h-8 border-2 border-green-400 bg-black overflow-hidden">
+              <div className="relative w-full h-6 sm:h-8 border-2 border-green-400 bg-black overflow-hidden">
                 <div
                   className="absolute inset-0 bg-gradient-to-r from-green-600 via-green-400 to-green-300 transition-all duration-100 ease-linear"
                   style={{ width: `${progress}%` }}
@@ -253,18 +260,18 @@ const HackerIntroLoader = ({ onLoadComplete }) => {
                 </div>
                 
                 {/* Digital Pattern Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-black/50 tracking-widest">
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] sm:text-xs font-bold text-black/50 tracking-widest">
                   {progress < 100 ? 'HACKING...' : 'COMPLETE'}
                 </div>
               </div>
 
-              {/* Binary Progress Blocks */}
-              <div className="flex gap-1 flex-wrap">
-                {Array.from({ length: 100 }).map((_, i) => (
+              {/* Binary Progress Blocks - Fewer on mobile */}
+              <div className="flex gap-[2px] sm:gap-1 flex-wrap">
+                {Array.from({ length: window.innerWidth < 640 ? 50 : 100 }).map((_, i) => (
                   <div
                     key={i}
-                    className={`w-1 h-3 transition-all duration-75 ${
-                      i < progress 
+                    className={`w-1 h-2 sm:h-3 transition-all duration-75 ${
+                      i < (window.innerWidth < 640 ? progress / 2 : progress)
                         ? 'bg-green-400 shadow-[0_0_5px_#22c55e]' 
                         : 'bg-gray-800 border border-green-400/20'
                     }`}
@@ -273,37 +280,38 @@ const HackerIntroLoader = ({ onLoadComplete }) => {
               </div>
             </div>
 
-            {/* System Info */}
-            <div className="border-t border-green-400/30 pt-3 grid grid-cols-2 gap-2 text-xs">
+            {/* System Info - Compact on mobile */}
+            <div className="border-t border-green-400/30 pt-2 sm:pt-3 grid grid-cols-2 gap-1 sm:gap-2 text-[9px] sm:text-xs">
               <div className="flex justify-between text-green-600">
                 <span>CPU:</span>
-                <span className="text-green-400">█████░░░░░ 54%</span>
+                <span className="text-green-400 text-[8px] sm:text-xs">54%</span>
               </div>
               <div className="flex justify-between text-green-600">
                 <span>RAM:</span>
-                <span className="text-green-400">███████░░░ 72%</span>
+                <span className="text-green-400 text-[8px] sm:text-xs">72%</span>
               </div>
               <div className="flex justify-between text-green-600">
                 <span>NET:</span>
-                <span className="text-green-400">██████████ 99%</span>
+                <span className="text-green-400 text-[8px] sm:text-xs">99%</span>
               </div>
               <div className="flex justify-between text-green-600">
                 <span>STATUS:</span>
                 <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 rounded-full bg-green-400 animate-ping" />
-                  <span className="text-green-400">{progress < 100 ? 'ACTIVE' : 'SUCCESS'}</span>
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-ping" />
+                  <span className="text-green-400 text-[8px] sm:text-xs">{progress < 100 ? 'ACTIVE' : 'OK'}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Warning */}
-        <div className="mt-6 text-center">
-          <div className="inline-flex items-center gap-3 border border-red-500 bg-red-500/10 px-6 py-3 text-red-400 text-xs font-mono animate-pulse">
-            <Lock className="w-4 h-4" />
-            <span>⚠ UNAUTHORIZED ACCESS DETECTED ⚠</span>
-            <Lock className="w-4 h-4" />
+        {/* Bottom Warning - Responsive */}
+        <div className="mt-4 sm:mt-6 text-center">
+          <div className="inline-flex items-center gap-2 sm:gap-3 border border-red-500 bg-red-500/10 px-3 py-2 sm:px-6 sm:py-3 text-red-400 text-[9px] sm:text-xs font-mono animate-pulse">
+            <Lock className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">⚠ UNAUTHORIZED ACCESS DETECTED ⚠</span>
+            <span className="sm:hidden">⚠ WARNING ⚠</span>
+            <Lock className="w-3 h-3 sm:w-4 sm:h-4" />
           </div>
         </div>
       </div>
@@ -329,13 +337,13 @@ const HackerIntroLoader = ({ onLoadComplete }) => {
         }
         @keyframes glitchLeft {
           0%, 100% { transform: translate(0, 0); }
-          33% { transform: translate(-4px, 2px); }
-          66% { transform: translate(4px, -2px); }
+          33% { transform: translate(-2px, 1px); }
+          66% { transform: translate(2px, -1px); }
         }
         @keyframes glitchRight {
           0%, 100% { transform: translate(0, 0); }
-          33% { transform: translate(4px, -2px); }
-          66% { transform: translate(-4px, 2px); }
+          33% { transform: translate(2px, -1px); }
+          66% { transform: translate(-2px, 1px); }
         }
         @keyframes glitchBg {
           0%, 100% { transform: translate(0, 0); }
