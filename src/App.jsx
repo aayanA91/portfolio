@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Loader from './components/loader'
+import HackerIntroLoader from './components/loader';
 import HackerHero from "./pages/home"
 import helmet from 'helmet';
 
 function App() {
- const [loaded, setLoaded] = useState(false);
+ const [loading, setLoading] = useState(true);
 
   return (
     <>
@@ -35,11 +35,10 @@ function App() {
         </script>
       </helmet>
 
-      {!loaded ? (
-        <Loader onComplete={() => setLoaded(true)} />
-      ) : (
-        <HackerHero/>
-      )}
+        {loading && <HackerIntroLoader onLoadComplete={() => setLoading(false)} />}
+        {!loading && (
+          <HackerHero/>
+        )}
     </>
   )
 }
