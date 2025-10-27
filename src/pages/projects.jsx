@@ -96,11 +96,11 @@ link:"https://bloomblosom.netlify.app"
 <span>A collection of system built, deployed, and battle-tested in production. Each project represents problems solved and code that ships </span>
 </p>
                   </div>  
-<div className="grid grid-cols-2 md:grid-cols-4 gap-6  mx-auto mb-10">
+<div className="grid grid-cols-2 md:grid-cols-4 gap-6  mx-auto mb-10 ">
 {divs.map((one , i)=>(
 <div
 key={i}
-className="border border-green-400/30 bg-green-400/5 p-6 hover:border-green-400 hover:shadow-lg hover:shadow-green-400/20 transition-all duration-300 group hover:scale-110 m-6"
+className="border border-green-400/30 bg-green-400/5 p-2 md:p-6  hover:border-green-400 hover:shadow-lg hover:shadow-green-400/20 transition-all duration-300 group hover:scale-110 m-6"
 >
     <div className="text-green-400 text-3xl">{one.value}</div>
     <div className="text-gray-400">{one.label}</div>
