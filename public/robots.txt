@@ -4,4 +4,4 @@ Disallow: /nogooglebot/
 User-agent: *
 Allow: /
 
-Sitemap: https://aayan-portfolio-three.vercel.app/sitemap.xml
+sitemap: https://aayan-portfolio-three.vercel.app/sitemap.xml
