@@ -1,6 +1,7 @@
-# Allow all search engines to crawl the site
-User-agent: *
-Disallow:
+User-agent: Googlebot
+Disallow: /nogooglebot/
 
-# Sitemap location
+User-agent: *
+Allow: /
+
 Sitemap: https://aayan-portfolio-three.vercel.app/sitemap.xml
